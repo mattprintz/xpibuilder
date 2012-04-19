@@ -1,4 +1,8 @@
+"""\
+Package interface
 
+The Package module is used to build an XPI package.
+"""
 
 import os
 import zipfile
@@ -7,6 +11,10 @@ from xpibuilder.Install import Install
 from xpibuilder.Manifest import Manifest
 
 class Package:
+    """
+    TODO: Add documentation
+    """
+    
     def __init__(self, basename, dataDir, buildDir=None):
         self.basename = basename
         self.dataDir = dataDir

@@ -1,11 +1,20 @@
+"""\
+Update interface
+
+The Update module creates new 
+"""
 
 from rdflib import Namespace, Literal, URIRef, ConjunctiveGraph, Namespace
 from RDFFile import RDFFile
 import hashlib
 
 class Update(RDFFile):
+    """
+    TODO: Add documentation
+    """
+    
     base = "urn:mozilla:extension:%s"
-    def __init__(self, package, filename):
+    def __init__(self, package, xpiFile):
         self.package = package
         self.id = package.install.get('id')
         self.basename = package.basename
@@ -32,9 +41,9 @@ class Update(RDFFile):
             self.graph.add((self.updateUri, self.em('id'), Literal(id)))
             self.graph.add((self.updateUri, self.em('minVersion'), Literal(minVersion)))
             self.graph.add((self.updateUri, self.em('maxVersion'), Literal(maxVersion)))
-            self.graph.add((self.updateUri, self.em('updateLink'), Literal("http://nucleus.intra.rackspace.com/%s" % filename)))
-            self.graph.add((self.updateUri, self.em('updateHash'), Literal("sha512:%s" % self._sha512sum(filename))))
-            
+            self.graph.add((self.updateUri, self.em('updateLink'), Literal("http://nucleus.intra.rackspace.com/%s" % xpiFile)))
+            self.graph.add((self.updateUri, self.em('updateHash'), Literal("sha512:%s" % self._sha512sum(xpiFile))))
+        
     
     def save(self, fileName=None):
         if fileName is None:

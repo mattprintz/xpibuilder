@@ -1,6 +1,13 @@
+"""\
+Manifest interface
 
+These modules read, modify, and serialize chrome.manifest files.
+"""
 
 class ManifestEntry:
+    """
+    TODO: Add documentation
+    """
     def __init__(self, provider, flags):
         self.provider = provider
         self.flags = flags
@@ -9,7 +16,6 @@ class ManifestEntry:
         return "%s %s" % (self.provider, " ".join(self.flags))
 
     def setJar(self, jarIdent):
-        needsProcess = False
         target = None
         if self.provider == "content":
             target = 1
@@ -21,17 +27,23 @@ class ManifestEntry:
             self.flags[target] = newLocation
 
 class Manifest:
+    """
+    TODO: Add documentation
+    """
     def __init__(self, file):
         self.entries = []
-        manifestFile = open(file, "r")
-        lines = manifestFile.readlines()
-        for line in lines:
-            data = line.split()
-            if data:
-                provider = data[0].lower()
-                flags = data[1:]
-                entry = ManifestEntry(provider, flags)
-                self.entries.append(entry)
+        try:
+            manifestFile = open(file, "r")
+            lines = manifestFile.readlines()
+            for line in lines:
+                data = line.split()
+                if data:
+                    provider = data[0].lower()
+                    flags = data[1:]
+                    entry = ManifestEntry(provider, flags)
+                    self.entries.append(entry)
+        except IOError, e:
+            pass
     
     def jarDirs(self):
         dirs = {}

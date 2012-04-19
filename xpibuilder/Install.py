@@ -1,12 +1,23 @@
+"""\
+Install interface
+
+This module reads, modifies, and serializes install.rdf files.
+"""
 
 from rdflib import Namespace, Literal, URIRef, ConjunctiveGraph, Namespace
 from RDFFile import RDFFile
 
 class Install(RDFFile):
+    """
+    TODO: Add documentation
+    """
     def __init__(self, file):
         self.graph = ConjunctiveGraph()
         self.subject = URIRef("urn:mozilla:install-manifest")
-        self.graph.load(file)
+        try:
+            self.graph.load(file)
+        except IOError, e:
+            pass
     
     def serialize(self):
         return self.graph.serialize()
@@ -55,15 +66,7 @@ class Install(RDFFile):
         self.graph.remove((self.subject, self.em('targetApplication'), None))
     
     def addTarget(self, id, minVersion, maxVersion):
-        # Do/while approximation to ensure we have a unique ids
-        unique = False
-        while not unique:
-            try:
-                uri = URIRef(self._genURI())
-                check = self.graph.triples((uri, None, None))
-                check.next()
-            except StopIteration:
-                unique = True
+        uri = self._genURI()
         self.graph.add((uri, self.em("id"), Literal(id)))
         self.graph.add((uri, self.em("minVersion"), Literal(minVersion)))
         self.graph.add((uri, self.em("maxVersion"), Literal(maxVersion)))

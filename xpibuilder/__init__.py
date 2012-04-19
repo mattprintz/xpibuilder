@@ -4,7 +4,7 @@ This module provides a pure java method of building Mozilla XPI extensions.
 
 """
 
-__version__ = "0.0.1"
+__version__ = "0.1.0"
 __date__ = "2012/04/18"
 
 from Package import Package

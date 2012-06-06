@@ -50,6 +50,7 @@ class Update(RDFFile):
             fileName = "%s-%s.rdf" % (self.basename, self.version)
         file = open(fileName, "w")
         file.write(self.graph.serialize())
+        return fileName
     
     def _sha512sum(self, fileName):
         sha512 = hashlib.sha512()

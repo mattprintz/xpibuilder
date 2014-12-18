@@ -1,7 +1,5 @@
-"""\
-This module provides a pure java method of building Mozilla XPI extensions.
-
-
+"""
+This module provides a pure python method of building Mozilla XPI extensions.
 """
 
 __version__ = "0.1.0"

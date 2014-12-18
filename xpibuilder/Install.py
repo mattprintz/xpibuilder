@@ -1,4 +1,4 @@
-"""\
+"""
 Install interface
 
 This module reads, modifies, and serializes install.rdf files.
@@ -7,21 +7,22 @@ This module reads, modifies, and serializes install.rdf files.
 from rdflib import Namespace, Literal, URIRef, ConjunctiveGraph, Namespace
 from RDFFile import RDFFile
 
+
 class Install(RDFFile):
     """
     TODO: Add documentation
     """
-    def __init__(self, file):
+    def __init__(self, fileName):
         self.graph = ConjunctiveGraph()
         self.subject = URIRef("urn:mozilla:install-manifest")
         try:
-            self.graph.load(file)
+            self.graph.load(fileName)
         except IOError, e:
             pass
-    
+
     def serialize(self):
         return self.graph.serialize()
-    
+
     def get(self, name):
         predicate = self.em(name)
         objects = []
@@ -44,7 +45,7 @@ class Install(RDFFile):
         self.graph.remove((self.subject, predicate, None))
         for value in list:
             self.graph.add((self.subject, predicate, Literal(value)))
-    
+
     def getTargets(self):
         targets = []
         targetSubjects = self.get('targetApplication')
@@ -56,7 +57,7 @@ class Install(RDFFile):
             maxVersion = str(self.graph.objects(URIRef(target), self.em("maxVersion")).next())
             targets.append((id, minVersion, maxVersion))
         return targets
-    
+
     def clearTargets(self):
         targetSubjects = self.get('targetApplication')
         if isinstance(targetSubjects, str):
@@ -64,7 +65,7 @@ class Install(RDFFile):
         for target in targetSubjects:
             self.graph.remove((URIRef(target), None, None))
         self.graph.remove((self.subject, self.em('targetApplication'), None))
-    
+
     def addTarget(self, id, minVersion, maxVersion):
         uri = self._genURI()
         self.graph.add((uri, self.em("id"), Literal(id)))

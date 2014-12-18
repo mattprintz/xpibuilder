@@ -1,5 +1,8 @@
+import sys
+import os
+
 from setuptools import setup, find_packages
-import sys, os
+
 
 VERSION = '0.1.0'
 
@@ -13,7 +16,7 @@ setup(
         "Programming Language :: Python :: 2 :: Only",
         "Topic :: Software Development :: Build Tools",
         "Intended Audience :: Developers",
-        ], 
+    ],
     keywords='mozilla xpi extension skin firefox thunderbird',
     author='Matthew Printz',
     author_email='matt.printz@rackspace.com',
@@ -24,5 +27,5 @@ setup(
     zip_safe=False,
     install_requires=[
         "rdflib",
-        ],
-    )
+    ],
+)
